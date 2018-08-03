@@ -1,23 +1,33 @@
-Function Write-Log {
+function Write-Log {
+    <#
+        .SYNOPSIS
+            Allows basic logging for PS Scripts
+        .EXAMPLE
+            Write-Log -Message "Message here" -Severity informational
+    #>
+
     [CmdletBinding()]
     param(
-        [Parameter()]
-        [ValidateNotNullOrEmpty()]
-        [String]$Message,
-
+        # Severity of the information you wish to log
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [ValidateSet('Information','Warning','Error')]
-        [String]$Severity = 'Information'
-    
+        [String]$Severity = 'Information',
+
+        # The information you wish to log
+        [Parameter()]
+        [ValidateNotNullOrEmpty()]
+        [String]$Message
+
     )
+
+$LogFile = Join-Path $PSScriptRoot "LogFile.csv"
 
     [pscustomobject]@{
         Time = (Get-Date -Format g)
-        Message = $Message
         Severity = $Severity
+        Message = $Message
 
+    } | Export-Csv $LogFile -Append -NoTypeInformation
     
-    
-    } | Export-Csv -Path ".\LogFile.csv" -Append -NoTypeInformation
 }

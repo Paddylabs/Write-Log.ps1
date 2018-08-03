@@ -3,7 +3,8 @@ function Write-Log {
         .SYNOPSIS
             Allows basic logging for PS Scripts
         .EXAMPLE
-            Write-Log -Message "Message here" -Severity informational
+            Write-Log -Message "Information message here" -Severity informational
+            Write-Log -Message $_.exception.message -Severity error
     #>
 
     [CmdletBinding()]

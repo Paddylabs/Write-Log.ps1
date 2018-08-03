@@ -11,7 +11,7 @@ function Write-Log {
         # Severity of the information you wish to log
         [Parameter()]
         [ValidateNotNullOrEmpty()]
-        [ValidateSet('Information','Warning','Error')]
+        [ValidateSet('Information', 'Warning', 'Error')]
         [String]$Severity = 'Information',
 
         # The information you wish to log
@@ -21,12 +21,12 @@ function Write-Log {
 
     )
 
-$LogFile = Join-Path $PSScriptRoot "LogFile.csv"
+    $LogFile = Join-Path $PSScriptRoot "LogFile.csv"
 
     [pscustomobject]@{
-        Time = (Get-Date -Format g)
+        Time     = (Get-Date -Format g)
         Severity = $Severity
-        Message = $Message
+        Message  = $Message
 
     } | Export-Csv $LogFile -Append -NoTypeInformation
     
